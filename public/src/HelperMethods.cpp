@@ -263,7 +263,7 @@ void logLeafInfo(MovieInfoRec *mir)
         
         for(UInt32 j = 0 ; j < tir->numLeafs ; j++)
             if(tir->leafInfo[j].hasFragments)
-                fprintf(leafInfoFile,"%d %Lf %Lf\n",tir->leafInfo[j].firstInSegment,tir->leafInfo[j].earliestPresentationTime,tir->leafInfo[j].lastPresentationTime);
+                fprintf(leafInfoFile,"%d %Lf %Lf %Lf\n",tir->leafInfo[j].firstInSegment,tir->leafInfo[j].earliestPresentationTime,tir->leafInfo[j].lastPresentationTime,tir->leafInfo[j+1].earliestPresentationTime);
             
     }
 
