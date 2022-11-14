@@ -3232,7 +3232,7 @@ OSErr Validate_pssh_Atom( atomOffsetEntry *aoe, void *refcon )
 
 	  }
 	}
-	delete pssh_contents;
+	delete[] pssh_contents;
 	free(Data);
 
 	// All done
