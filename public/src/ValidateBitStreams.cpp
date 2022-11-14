@@ -472,7 +472,7 @@ OSErr Validate_ES_Descriptor(BitBuffer *inbb, UInt8 Expect_ObjectType, UInt8 Exp
 	
 	VALIDATE_FIELD  ("%d",  ES_ID, 16 );
 	if(vg.cmaf && ES_ID != 0) {
-		errprint("CMAF check violated: Section 10.3.4.2.3. \"fields of the ES_Desciptor SHALL be set to the following values: ES_ID = 0.\", but found %d\n", ES_ID);
+		errprint("CMAF check violated: Section 10.3.4.2.3. \"fields of the ES_Descriptor SHALL be set to the following values: ES_ID = 0.\", but found %d\n", ES_ID);
 	}
 	if (fileForm) {
 		FieldMustBe( ES_ID, 0, "Validate_ES_Descriptor: ES_ID should be %d not %d in media tracks\n" );
