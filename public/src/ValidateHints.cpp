@@ -1994,7 +1994,7 @@ static SInt32 Chars_To_Num( char *inCharsStart, char *inCharsEnd, Boolean *outFo
 	memcpy(tempString, inCharsStart, length);
 	tempString[length] = '\0';
 
-	sscanf(tempString, "%ld", &value);
+	sscanf(tempString, "%d", &value);
 	found = true;
 
 bail:
@@ -2026,7 +2026,7 @@ static SInt32 Chars_To_hexNum( char *inCharsStart, char *inCharsEnd, Boolean *ou
 	memcpy(tempString, inCharsStart, length);
 	tempString[length] = '\0';
 
-	sscanf(tempString, "%lx", &value);
+	sscanf(tempString, "%x", &value);
 	found = true;
 
 bail:

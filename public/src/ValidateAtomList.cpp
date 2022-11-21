@@ -1363,7 +1363,7 @@ OSErr Validate_styp_Atom( atomOffsetEntry *aoe, void *refcon )
 			vg.simsInStyp[segmentNum] = false;
 
 		if(!segmentFound)
-			errprint("styp not at the begining of a segment (abs. file offset %lld), this is unexpected\n",aoe->offset);
+			errprint("styp not at the begining of a segment (abs. file offset %ld), this is unexpected\n",aoe->offset);
 					
 		/*skip styp size, tag, major brand and version*/
 		offset += 16;
@@ -1844,8 +1844,8 @@ OSErr Validate_moof_Atom( atomOffsetEntry *aoe, void *refcon )
 	
 	MoofInfoRec *moofInfo = &mir->moofInfo[mir->processedFragments];
 	
-	atomprint("size=\"%lld\"\n", aoe->size);
-	atomprint("offset=\"%lld\"\n", aoe->offset);
+	atomprint("size=\"%ld\"\n", aoe->size);
+	atomprint("offset=\"%ld\"\n", aoe->offset);
 	atomprint(">\n"); 
 	
 	minOffset = aoe->offset + aoe->atomStartSize;

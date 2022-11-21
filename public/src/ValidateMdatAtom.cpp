@@ -240,7 +240,7 @@ inline OSErr variable_bits(BitBuffer *bb, UInt32 n_bits, UInt32 *value)
 {
 	OSErr err = noErr;
 	UInt8 b_read_more;
-	printf("<%s>: variable_bits(%lu)\n", __FILE__, n_bits);
+	printf("<%s>: variable_bits(%u)\n", __FILE__, n_bits);
 	*value = 0;
 	do {
 		*value += GetBits(bb, n_bits, &err);
@@ -313,7 +313,7 @@ OSErr Validate_AC4_emdf_protection(BitBuffer *bb, void *refcon)
 			primary_length = 128;
 			break;
 		default:
-			printf("<%s> : table->protection_length_primary %lu is invalid\n", __FUNCTION__, table->protection_length_primary);
+			printf("<%s> : table->protection_length_primary %u is invalid\n", __FUNCTION__, table->protection_length_primary);
 			break;
 	}
 	VALIDATE_FIELD("%d", table, protection_bits_primary, primary_length);
@@ -517,9 +517,9 @@ OSErr Validate_AC4_presentation_substream_info(BitBuffer *bb, void *refcon)
 	VALIDATE_FIELD("%d",table, substream_index, 2);
 	if (table->substream_index == 3)
 	{
-		printf ("table->substream_index_1 %lu\n", table->substream_index);
+		printf ("table->substream_index_1 %u\n", table->substream_index);
 		BAILIFERR(variable_bits(bb, 2, &table->substream_index));
-		printf ("table->substream_index_2 %lu\n", table->substream_index);
+		printf ("table->substream_index_2 %u\n", table->substream_index);
 	}
 
 bail:

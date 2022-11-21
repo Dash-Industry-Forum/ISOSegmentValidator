@@ -91,18 +91,18 @@ void checkDASHBoxOrder(long cnt, atomOffsetEntry *list, long segmentInfoSize, bo
 
 					if (list[j].type == 'moof') {
 						if (j == (cnt - 1) || list[j + 1].offset >= (offset + segmentSizes[index]) || list[j + 1].type != 'mdat'){
-							errprint("mdat not found following a moof in segment %d (at file absolute offset %lld), violating: ISO/IEC 23009-1:2012(E), 6.3.4.2: Each Media Segment shall contain one or more whole self-contained movie fragments. A whole, self-contained movie fragment is a movie fragment ('moof') box and a media data ('mdat') box that contains all the media samples that do not use external data references referenced by the track runs in the movie fragment box.\n", index, list[j].offset);
+							errprint("mdat not found following a moof in segment %d (at file absolute offset %ld), violating: ISO/IEC 23009-1:2012(E), 6.3.4.2: Each Media Segment shall contain one or more whole self-contained movie fragments. A whole, self-contained movie fragment is a movie fragment ('moof') box and a media data ('mdat') box that contains all the media samples that do not use external data references referenced by the track runs in the movie fragment box.\n", index, list[j].offset);
 				if(vg.cmaf){
-				errprint("CMAF check violated: Section 7.5.19. \"Each CMAF Fragment SHALL contain one or more Media Data Box(es)\", not found in Segment/Fragment %d (at file absolute offset %lld).\n",index, list[j].offset);
-								errprint("CMAF check violated: Section 7.3.2.4. \"A CMAF Fragment SHALL consist of one or more ISO Base Media segments that contains one MovieFragmentBox followed by one or more Media Data Box(es) containing the samples it references\", but mdat not found following a moof in Segment/Fragment %d (at file absolute offset %lld).\n",index, list[j].offset);
+				errprint("CMAF check violated: Section 7.5.19. \"Each CMAF Fragment SHALL contain one or more Media Data Box(es)\", not found in Segment/Fragment %d (at file absolute offset %ld).\n",index, list[j].offset);
+								errprint("CMAF check violated: Section 7.3.2.4. \"A CMAF Fragment SHALL consist of one or more ISO Base Media segments that contains one MovieFragmentBox followed by one or more Media Data Box(es) containing the samples it references\", but mdat not found following a moof in Segment/Fragment %d (at file absolute offset %ld).\n",index, list[j].offset);
 								if(vg.cmafChunk)
-									errprint("CMAF check violated: Section 7.3.2.3 \"A CMAF Chunk SHALL contain one ISOBMFF segment contraints to include one MovieFragmentBox followed by one Media Data Box\", but mdat not found following a moof in Chunk %d (at file absolute offset %lld).\n", index, list[j].offset);
+									errprint("CMAF check violated: Section 7.3.2.3 \"A CMAF Chunk SHALL contain one ISOBMFF segment contraints to include one MovieFragmentBox followed by one Media Data Box\", but mdat not found following a moof in Chunk %d (at file absolute offset %ld).\n", index, list[j].offset);
 							}
 							if(vg.dashifll){
-								errprint("CMAF check violated: Section 7.3.2.4. \"A CMAF Fragment SHALL consist of one or more ISO Base Media segments that contains one MovieFragmentBox followed by one or more Media Data Box(es) containing the samples it references\", but mdat not found following a moof in Segment/Fragment %d (at file absolute offset %lld).\n",index, list[j].offset);
+								errprint("CMAF check violated: Section 7.3.2.4. \"A CMAF Fragment SHALL consist of one or more ISO Base Media segments that contains one MovieFragmentBox followed by one or more Media Data Box(es) containing the samples it references\", but mdat not found following a moof in Segment/Fragment %d (at file absolute offset %ld).\n",index, list[j].offset);
 							}
 							if(vg.hbbtv)
-								errprint("### HbbTV check violated Section E.3.2: 'Each Segment shall consists of a whole self-contained movie fragment', mdat not found following a moof in segment %d (at file absolute offset %lld),\n", index, list[j].offset);
+								errprint("### HbbTV check violated Section E.3.2: 'Each Segment shall consists of a whole self-contained movie fragment', mdat not found following a moof in segment %d (at file absolute offset %ld),\n", index, list[j].offset);
 			}
 
 						fragmentInSegmentFound = true;
@@ -110,21 +110,21 @@ void checkDASHBoxOrder(long cnt, atomOffsetEntry *list, long segmentInfoSize, bo
 
 					if (list[j].type == 'sidx' && vg.simsInStyp[index] && !ssixFoundInSegment) {
 						if (j == (cnt - 1) || list[j + 1].offset >= (offset + segmentSizes[index]) || list[j + 1].type != 'ssix')
-							errprint("ssix not found following the sidx in segment %d (at file absolute offset %lld), violating: ISO/IEC 23009-1:2012(E), 6.3.4.4: The Subsegment Index box ('ssix') shall be present and shall follow immediately after the 'sidx' box that documents the same Subsegment\n", index, list[j].offset);
+							errprint("ssix not found following the sidx in segment %d (at file absolute offset %ld), violating: ISO/IEC 23009-1:2012(E), 6.3.4.4: The Subsegment Index box ('ssix') shall be present and shall follow immediately after the 'sidx' box that documents the same Subsegment\n", index, list[j].offset);
 
 						ssixFoundInSegment = true;
 					}
 					/*JLF: this is only valid for onDemand profile (8.3.3) and live (8.4.3)*/
 					if (fragmentInSegmentFound && (list[j].type == 'sidx' || list[j].type == 'ssix')) {
 						if (vg.isoondemand || vg.dash264base || vg.dashifbase) {
-							errprint("Indexing information (sidx/ssix) found in segment %d (at file absolute offset %lld) following a moof, violating: ", index, list[j].offset);
+							errprint("Indexing information (sidx/ssix) found in segment %d (at file absolute offset %ld) following a moof, violating: ", index, list[j].offset);
 
 							if (vg.isoondemand)
 								errprint("ISO/IEC 23009-1:2012(E), 8.3.3: All Segment Index ('sidx') and Subsegment Index ('ssix') boxes shall be placed before any Movie Fragment ('moof') boxes\n");
 							else
 								errprint("Section 3.2.3. Interoperability Point DASH264: In Media Segments, all Segment Index ('sidx') and Subsegment Index ('ssix') boxes, if present, shall be placed before any Movie Fragment ('moof') boxes.\n");
 						} else if (vg.isoLive)
-							errprint("Indexing information (sidx/ssix) found in segment %d (at file absolute offset %lld) following a moof, violating: ISO/IEC 23009-1:2012(E), 8.4.3: In Media Segments, all Segment Index ('sidx') and Subsegment Index ('ssix') boxes shall be placed before any Movie Fragment ('moof') boxes\n", index, list[j].offset);
+							errprint("Indexing information (sidx/ssix) found in segment %d (at file absolute offset %ld) following a moof, violating: ISO/IEC 23009-1:2012(E), 8.4.3: In Media Segments, all Segment Index ('sidx') and Subsegment Index ('ssix') boxes shall be placed before any Movie Fragment ('moof') boxes\n", index, list[j].offset);
 					}
 				}
 
@@ -556,7 +556,7 @@ void checkNonIndexedSamples(MovieInfoRec *mir) {
 		}
 
 		if (!currentTrackIndexed && indexedTrackFound && nonSyncSamples > 0)
-			errprint("%lld non-sync samples found out of total %lld samples, for non-indexed track %d, violating ISO/IEC 23009-1:2012(E), 6.2.3.2: every access unit of the non-indexed streams shall be a SAP of type 1.\n", nonSyncSamples, nonSyncSamples + syncSamples, mir->tirList[i].trackID);
+			errprint("%ld non-sync samples found out of total %ld samples, for non-indexed track %d, violating ISO/IEC 23009-1:2012(E), 6.2.3.2: every access unit of the non-indexed streams shall be a SAP of type 1.\n", nonSyncSamples, nonSyncSamples + syncSamples, mir->tirList[i].trackID);
 	}
 
 	vg.accessUnitDurationNonIndexedTrack = nonIndexTrackFound ? accessUnitDuration : 0; //To store for this represntation in file
@@ -780,7 +780,7 @@ OSErr processIndexingInfo(MovieInfoRec *mir) {
 			if (mir->sidxInfo[i].references[j].reference_type == 1) {
 				sidx = getSidxByOffset(mir->sidxInfo, mir->numSidx, absoluteOffset);
 				if (sidx == NULL)
-					errprint("Referenced sidx not found for sidx number %d at reference count %d: Offset %lld\n", i + 1, j, absoluteOffset);
+					errprint("Referenced sidx not found for sidx number %d at reference count %d: Offset %ld\n", i + 1, j, absoluteOffset);
 
 				if (mir->sidxInfo[i].reference_ID != sidx->reference_ID)
 					errprint("Referenced sidx reference_ID %d does not match to reference_ID %d for sidx number %d at reference count %d ; Section 8.16.3.3 of ISO/IEC 14496-12 4th edition: if this Segment Index box is referenced from a \"parent\" Segment Index box, the value of reference_ID shall be the same as the value of reference_ID of the \"parent\" Segment Index box\n", sidx->reference_ID, mir->sidxInfo[i].reference_ID, i + 1, j);
@@ -810,7 +810,7 @@ OSErr processIndexingInfo(MovieInfoRec *mir) {
 				TrackInfoRec *tir = &(mir->tirList[trackIndex]);
 
 				if (moofIndex >= mir->numFragments) {
-					errprint("Referenced moof not found for sidx number %d at reference count %d: Offset %lld\n", i + 1, j, absoluteOffset);
+					errprint("Referenced moof not found for sidx number %d at reference count %d: Offset %ld\n", i + 1, j, absoluteOffset);
 					continue;
 				}
 
@@ -1035,7 +1035,7 @@ void processBuffering(long cnt, atomOffsetEntry *list, MovieInfoRec *mir) {
 							if (moof->trafInfo[k].trunInfo[l].data_offset_present)
 								offset = moof->offset - initSize + moof->trafInfo[k].trunInfo[l].data_offset;
 							else if (l == 0)
-								errprint("data_offset absent for the first run of fragment number %d (absolute moof file offset %lld), unexpected!\n", k + 1, moof->offset);
+								errprint("data_offset absent for the first run of fragment number %d (absolute moof file offset %ld), unexpected!\n", k + 1, moof->offset);
 
 							for (UInt32 m = 0; m < moof->trafInfo[k].trunInfo[l].sample_count; m++) 
 							{
@@ -1063,7 +1063,7 @@ void processBuffering(long cnt, atomOffsetEntry *list, MovieInfoRec *mir) {
 
 								totalDataRemoved += dataSizeToRemove;
 								lastOffset = offset;
-								//fprintf(stderr,"Total bits removed: %Lf, Size to remove: %Lf, Buffer Fullness: %Lf, average input rate: %Lf, duration: %Lf, sample %d, run %d, track fragment %d, fragment %d, track id %d (sample absolute offset %lld, fragment absolute file offset %lld)\n",totalDataRemoved,dataSizeToRemove,bufferFullness/8.0,totalBitsAdded/(((long double)timeNowInTicks/(long double)tir->mediaTimeScale)-0),((long double)moof->trafInfo[k].trunInfo[l].sample_duration[m]/(long double)tir->mediaTimeScale),m+1,l+1,k+1,j+1,tir->trackID,offset - moof->trafInfo[k].trunInfo[l].sample_size[m] + initSize, moof->offset);
+								//fprintf(stderr,"Total bits removed: %Lf, Size to remove: %Lf, Buffer Fullness: %Lf, average input rate: %Lf, duration: %Lf, sample %d, run %d, track fragment %d, fragment %d, track id %d (sample absolute offset %ld, fragment absolute file offset %ld)\n",totalDataRemoved,dataSizeToRemove,bufferFullness/8.0,totalBitsAdded/(((long double)timeNowInTicks/(long double)tir->mediaTimeScale)-0),((long double)moof->trafInfo[k].trunInfo[l].sample_duration[m]/(long double)tir->mediaTimeScale),m+1,l+1,k+1,j+1,tir->trackID,offset - moof->trafInfo[k].trunInfo[l].sample_size[m] + initSize, moof->offset);
 
 
 
@@ -1081,7 +1081,7 @@ void processBuffering(long cnt, atomOffsetEntry *list, MovieInfoRec *mir) {
 									long double finalBufferFullness = bufferFullness - dataSizeToRemove * 8; //unused
 									long double targetBitrate = (long double) (8 * (offset - initSize)) / ((long double) timeNowInTicks / (long double) tir->mediaTimeScale); // unused //Direct bitrate calculation
 
-									//fprintf(stderr,"Recalculated: targetBitrate %Lf, byte offset %lld, time %lld: %Lf, total removed %Lf\n",targetBitrate,offset - initSize,timeNowInTicks,((long double)timeNowInTicks/(long double)tir->mediaTimeScale),totalDataRemoved,((long double)offset - initSize)-totalDataRemoved);
+									//fprintf(stderr,"Recalculated: targetBitrate %Lf, byte offset %ld, time %ld: %Lf, total removed %Lf\n",targetBitrate,offset - initSize,timeNowInTicks,((long double)timeNowInTicks/(long double)tir->mediaTimeScale),totalDataRemoved,((long double)offset - initSize)-totalDataRemoved);
 
 									if (targetBitrate <= currentBandwidth) {
 										; //fprintf(stderr,"Program error: unexpected: calculated target bitrate %Lf for this non-conforming track (with buffer under-run) is less than or equal to its actual bandwidth %Lf , exiting!\n",targetBitrate,currentBandwidth);
@@ -1142,9 +1142,9 @@ void processBuffering(long cnt, atomOffsetEntry *list, MovieInfoRec *mir) {
 		if(currentBandwidth > vg.bandwidth && mpd_val_conf)
 			currentBandwidth = (long double)vg.bandwidth;
 		if(mpd_val_conf)
-			fprintf(stderr, "According to DASH-IF IOP Section 3.2.8 @bandwidth of the Representation (%ld bps) is set too high given the @minimumBufferTime (%ld s), the minimum @bandwidth value required to conform is %ld bps.\n", (UInt32) vg.bandwidth, (UInt32) vg.minBufferTime, (UInt32) currentBandwidth);
+			fprintf(stderr, "According to DASH-IF IOP Section 3.2.8 @bandwidth of the Representation (%ld bps) is set too high given the @minimumBufferTime (%ld s), the minimum @bandwidth value required to conform is %ld bps.\n", (long) vg.bandwidth, (long) vg.minBufferTime, (long) currentBandwidth);
 		else
-			errprint("According to DASH-IF IOP Section 3.2.8 @bandwidth of the Representation (%ld bps) is set too low given the @minimumBufferTime (%ld s), the minimum @bandwidth value required to conform is %ld bps.\n", (UInt32) vg.bandwidth, (UInt32) vg.minBufferTime, (UInt32) currentBandwidth);
+			errprint("According to DASH-IF IOP Section 3.2.8 @bandwidth of the Representation (%ld bps) is set too low given the @minimumBufferTime (%ld s), the minimum @bandwidth value required to conform is %ld bps.\n", (long) vg.bandwidth, (long) vg.minBufferTime, (long) currentBandwidth);
 
 		/*if (trackNonConforming || (currentBandwidth != (long double) vg.bandwidth) ) //Latter means vg.suggestBandwidth is set and new bw is calculated
 		{
@@ -1223,7 +1223,7 @@ void checkCMAFBoxOrder(long cnt, atomOffsetEntry *list, long segmentInfoSize, bo
 					}
 					if (list[j].type == 'moof') { //This condition is also implemented in Dash box order.
 						if (j == (cnt - 1) || list[j + 1].offset >= (offset + segmentSizes[index]) || list[j + 1].type != 'mdat') {
-							errprint("mdat not found following a moof in segment %d (at file absolute offset %lld), violating: CMAF Section 7.3.1 (ordinality/nesting), 'mdat' follows 'moof' in box order and ISO/IEC 23009-1:2012(E), 6.3.4.2: Each Media Segment shall contain one or more whole self-contained movie fragments. A whole, self-contained movie fragment is a movie fragment ('moof') box and a media data ('mdat') box that contains all the media samples that do not use external data references referenced by the track runs in the movie fragment box.\n", index, list[j].offset);
+							errprint("mdat not found following a moof in segment %d (at file absolute offset %ld), violating: CMAF Section 7.3.1 (ordinality/nesting), 'mdat' follows 'moof' in box order and ISO/IEC 23009-1:2012(E), 6.3.4.2: Each Media Segment shall contain one or more whole self-contained movie fragments. A whole, self-contained movie fragment is a movie fragment ('moof') box and a media data ('mdat') box that contains all the media samples that do not use external data references referenced by the track runs in the movie fragment box.\n", index, list[j].offset);
 			            }
 
 						cmafFragmentInCMAFSegmentFound = true;

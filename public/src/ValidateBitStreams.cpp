@@ -3856,7 +3856,7 @@ OSErr CheckValuesInContext( UInt32 bufferSize, UInt32 maxBitrate, UInt32 avgBitr
     break;
 
   default:
-    sprintf(profString,"WARNING: unknown visual profile= %lu\n",p_vsc->profileLevelInd);
+    sprintf(profString,"WARNING: unknown visual profile= %u\n",p_vsc->profileLevelInd);
     if( p_vsc->profileLevelInd == 255 ){
       err = 1;
       errprint("invalid visual profile= %lu\n",p_vsc->profileLevelInd);

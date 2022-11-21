@@ -28,6 +28,7 @@ limitations under the License.
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdint.h>
 #include <string.h>
 
 #if defined(__GNUC__) && ( defined(__APPLE_CPP__) || defined(__APPLE_CC__) || defined(__MACOS_CLASSIC__) )
@@ -71,23 +72,19 @@ enum {
 	kSkipUnknownAtoms = 1L<<0
 };
 
-typedef unsigned char UInt8;
-typedef char SInt8;
-typedef long SInt32;
-typedef unsigned long UInt32;
-typedef long Int32;
-typedef short SInt16;
-typedef unsigned short UInt16;
+typedef uint8_t UInt8;
+typedef int8_t SInt8;
+typedef int32_t SInt32;
+typedef uint32_t UInt32;
+typedef int32_t Int32;
+typedef int64_t SInt16;
+typedef uint16_t UInt16;
 typedef UInt32 UnsignedFixed;
 
 typedef unsigned char uuidType[16];		// 128-bit uuid (guid)
-#ifdef  _MSC_VER
-typedef unsigned __int64 UInt64;
-typedef __int64 SInt64;
-#else
-typedef unsigned long long UInt64;
-typedef long long SInt64;
-#endif
+
+typedef uint64_t UInt64;
+typedef int64_t SInt64;
 typedef UInt32 TimeValue;
 typedef UInt32 PriorityType;
 typedef SInt32 Fixed;

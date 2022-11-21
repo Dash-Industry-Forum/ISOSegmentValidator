@@ -604,7 +604,7 @@ int main(void)
 			{
 				int temp1;
 				UInt64 temp2;
-				int ret = fscanf(segmentOffsetInfoFile,"%d %lld\n",&temp1,&temp2);
+				int ret = fscanf(segmentOffsetInfoFile,"%d %ld\n",&temp1,&temp2);
 				if(ret < 2)
 					break;
 
@@ -773,7 +773,7 @@ void loadLeafInfo(char *leafInfoFileName)
 		return;
 	}
 
-	fscanf(leafInfoFile,"%lu\n",&vg.accessUnitDurationNonIndexedTrack);
+	fscanf(leafInfoFile,"%u\n",&vg.accessUnitDurationNonIndexedTrack);
 
 	fscanf(leafInfoFile,"%u\n",&vg.numControlTracks);
 
@@ -783,7 +783,7 @@ void loadLeafInfo(char *leafInfoFileName)
 
 	for(unsigned int i = 0 ; i < vg.numControlTracks ; i++)
 	{
-		fscanf(leafInfoFile,"%lu %lu\n",&vg.trackTypeInfo[i].track_ID,&vg.trackTypeInfo[i].componentSubType);
+		fscanf(leafInfoFile,"%u %u\n",&vg.trackTypeInfo[i].track_ID,&vg.trackTypeInfo[i].componentSubType);
 	}
 
 	for(unsigned int i = 0 ; i < vg.numControlTracks ; i++)
@@ -814,7 +814,7 @@ void loadOffsetInfo(char *offsetsFileName)
 
 	while(1)
 	{
-		int ret = fscanf(offsetsFile,"%llu %llu\n",&dummy1,&dummy2);
+		int ret = fscanf(offsetsFile,"%lu %lu\n",&dummy1,&dummy2);
 		if(ret > 2)
 		{
 			printf("%d entries found on entry number %d, improper offset info file, exiting!\n",ret,numEntries+1);
@@ -843,7 +843,7 @@ void loadOffsetInfo(char *offsetsFileName)
 
 	for(unsigned int index = 0 ; index < vg.numOffsetEntries ; index ++)
 	{
-		fscanf(offsetsFile,"%llu %llu\n",&vg.offsetEntries[index].offset,&vg.offsetEntries[index].sizeRemoved);
+		fscanf(offsetsFile,"%lu %lu\n",&vg.offsetEntries[index].offset,&vg.offsetEntries[index].sizeRemoved);
 		index = index;
 	}
 
@@ -1247,15 +1247,15 @@ char *ostypetostr_r(UInt32 num, char * buffer)
 //	for cases where you need it more than once in the same print statment, use int64toxstr_r() instead
 char *int64toxstr(UInt64 num)
 {
-	static char str[20];
+	static char str[32];
 	UInt32 hi,lo;
 
 	hi = num>>32;
 	lo = num&(0xffffffff);
 	if (hi) {
-		sprintf(str,"0x%lx%8.8lx",hi,lo);
+		sprintf(str,"0x%u%8.8u",hi,lo);
 	} else {
-		sprintf(str,"0x%lx",lo);
+		sprintf(str,"0x%u",lo);
 	}
 	return str;
 }
@@ -1267,9 +1267,9 @@ char *int64toxstr_r(UInt64 num, char * str)
 	hi = num>>32;
 	lo = num&(0xffffffff);
 	if (hi) {
-		sprintf(str,"0x%lx%8.8lx",hi,lo);
+		sprintf(str,"0x%u%8.8u",hi,lo);
 	} else {
-		sprintf(str,"0x%lx",lo);
+		sprintf(str,"0x%u",lo);
 	}
 	return str;
 }
@@ -1285,9 +1285,9 @@ char *int64todstr(UInt64 num)
 	lo = num&(0xffffffff);
 
 	if (hi)
-		sprintf(str,"%ld%8.8ld",hi,lo);
+		sprintf(str,"%u%8.8u",hi,lo);
 	else
-		sprintf(str,"%ld",lo);
+		sprintf(str,"%u",lo);
 	return str;
 }
 
@@ -1300,9 +1300,9 @@ char *int64todstr_r(UInt64 num, char * str)
 	lo = num&(0xffffffff);
 
 	if (hi)
-		sprintf(str,"%ld%8.8ld",hi,lo);
+		sprintf(str,"%u%8.8u",hi,lo);
 	else
-		sprintf(str,"%ld",lo);
+		sprintf(str,"%u",lo);
 	return str;
 }
 

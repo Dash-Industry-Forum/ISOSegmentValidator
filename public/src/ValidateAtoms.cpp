@@ -76,7 +76,7 @@ OSErr Validate_iods_Atom( atomOffsetEntry *aoe, void *refcon )
 	UInt32 flags;
 	UInt64 offset;
 	Ptr odDataP = nil;
-	unsigned long odSize;
+	UInt32 odSize;
 
 	// Get version/flags
 	BAILIFERR( GetFullAtomVersionFlags( aoe, &version, &flags, &offset ) );
@@ -356,7 +356,7 @@ OSErr Validate_tkhd_Atom( atomOffsetEntry *aoe, void *refcon )
 
 	if(vg.cmaf){
 		if(tkhdHead.duration != 0){
-			errprint("CMAF check violated: Section 7.5.4. \"The value of the duration field SHALL be set to a value of zero\", found %llu\n",tkhdHead.duration);
+			errprint("CMAF check violated: Section 7.5.4. \"The value of the duration field SHALL be set to a value of zero\", found %lu\n",tkhdHead.duration);
 		}
 
 		if((tkhdHeadCommon.matrix[0][0] != 0 && tkhdHeadCommon.matrix[1][1] != 0 && tkhdHeadCommon.matrix[2][2] != 0x40000000) || (tkhdHeadCommon.matrix[0][0] != 0x00010000 && tkhdHeadCommon.matrix[1][1] != 0x00010000 && tkhdHeadCommon.matrix[2][2] != 0x40000000)){
@@ -2499,7 +2499,7 @@ OSErr Validate_mehd_Atom( atomOffsetEntry *aoe, void *refcon )
 	}
 
 	atomprintnotab("\tversion=\"%d\" flags=\"%d\"\n", version, flags);
-	atomprint("fragmentDuration=\"%lld\"\n", (mir->fragment_duration));
+	atomprint("fragmentDuration=\"%ld\"\n", (mir->fragment_duration));
 	atomprint(">\n");
 
 		if(vg.cmaf && mir->fragment_duration <=0)
@@ -2534,7 +2534,7 @@ OSErr Validate_trep_Atom( atomOffsetEntry *aoe, void *refcon )
 		BAILIFERR( GetFileDataN32( aoe, &track_id, offset, &offset ) );
 
 	atomprintnotab("\tversion=\"%d\" flags=\"%d\"\n", version, flags);
-	atomprint("track_id=\"%lld\"\n", track_id);
+	atomprint("track_id=\"%ld\"\n", track_id);
 	atomprint(">\n");
 
 	// All done
@@ -2817,9 +2817,9 @@ OSErr Validate_trun_Atom( atomOffsetEntry *aoe, void *refcon )
 
 	sampleprint("trafInfo->default_base_is_moof %d\n",  trafInfo->default_base_is_moof );
 	sampleprint("trunInfo->data_offset_present %d\n",  trunInfo->data_offset_present );
-	sampleprint("trunInfo->data_offset %08lluX\n",  trunInfo->data_offset );
-	sampleprint("moofInfo->offset %lld  %08lluX\n",   moofInfo->offset, moofInfo->offset );
-	fprintf(stdout, "moofInfo->offset %lld  %08lluX\n",   moofInfo->offset, moofInfo->offset );
+	sampleprint("trunInfo->data_offset %08uX\n",  trunInfo->data_offset );
+	sampleprint("moofInfo->offset %ld  %08luX\n",   moofInfo->offset, moofInfo->offset );
+	fprintf(stdout, "moofInfo->offset %ld  %08luX\n",   moofInfo->offset, moofInfo->offset );
 
 	if (trafInfo->default_base_is_moof && trunInfo->data_offset_present)
 	{
@@ -2859,7 +2859,7 @@ OSErr Validate_trun_Atom( atomOffsetEntry *aoe, void *refcon )
 
 	trafInfo->processedTrun++;
 
-	atomprint("cummulatedSampleDuration=\"%lld\"\n", trunInfo->cummulatedSampleDuration);
+	atomprint("cummulatedSampleDuration=\"%ld\"\n", trunInfo->cummulatedSampleDuration);
 	atomprint("earliestCompositionTime=\"%ld\"\n", trafInfo->earliestCompositionTimeInTrackFragment);
 	atomprint("data_offset=\"%ld\"\n", trunInfo->data_offset);
 	if(vg.cmaf) {
@@ -2979,8 +2979,8 @@ OSErr Validate_sgpd_Atom( atomOffsetEntry *aoe, void *refcon )
 	vg.tabcnt++;
 
 	for(UInt32 i=0; i<sgpdInfo->entry_count; i++){
-	sampleprint("<sgpdEntry descriptionLength=\"%ld\"", EndianU32_BtoN(sgpdInfo->description_length[i]));
-	sampleprintnotab(" sampleGroupDescriptionEntry=\"%ld\"/>\n", EndianU32_BtoN(sgpdInfo->SampleGroupDescriptionEntry[i]));
+	sampleprint("<sgpdEntry descriptionLength=\"%u\"", EndianU32_BtoN(sgpdInfo->description_length[i]));
+	sampleprintnotab(" sampleGroupDescriptionEntry=\"%u\"/>\n", EndianU64_BtoN(sgpdInfo->SampleGroupDescriptionEntry[i]));
 	}
 
 	--vg.tabcnt;
@@ -3143,7 +3143,7 @@ OSErr Validate_tfdt_Atom( atomOffsetEntry *aoe, void *refcon )
 	trafInfo->tfdtFound = true;
 
 	atomprintnotab("\tversion=\"%d\" flags=\"%d\"\n", version, flags);
-	atomprint("baseMediaDecodeTime=\"%lld\"\n", (trafInfo->baseMediaDecodeTime));//EndianU64_BtoN
+	atomprint("baseMediaDecodeTime=\"%ld\"\n", (trafInfo->baseMediaDecodeTime));//EndianU64_BtoN
 	atomprint(">\n");
 
 	// All done
@@ -3196,7 +3196,7 @@ OSErr Validate_pssh_Atom( atomOffsetEntry *aoe, void *refcon )
 	pssh_contents = new char[DataSize*2];
 	if(vg.pssh_count > 0)
 	{
-	  sprintf(pssh_contents, "%lu %lu %s %lu %s",version, flags, SystemID, DataSize, Data);
+	  sprintf(pssh_contents, "%u %u %s %u %s",version, flags, SystemID, DataSize, Data);
 
 	  //Get pssh mentioned in MPD from a saved file
 	  char *pssh_file_contents;
@@ -3324,8 +3324,8 @@ OSErr Validate_sidx_Atom( atomOffsetEntry *aoe, void *refcon )
 		BAILIFERR( GetFileDataN64( aoe, &sidxInfo->first_offset, offset, &offset ) );
 	}
 
-	atomprint("earliestPresentationTime=\"%lld\"\n",sidxInfo->earliest_presentation_time); //int64todstr(EndianU64_BtoN(sidxInfo->earliest_presentation_time)));
-	atomprint("firstOffset=\"%lld\"\n", (EndianU64_BtoN(sidxInfo->first_offset)));
+	atomprint("earliestPresentationTime=\"%ld\"\n",sidxInfo->earliest_presentation_time); //int64todstr(EndianU64_BtoN(sidxInfo->earliest_presentation_time)));
+	atomprint("firstOffset=\"%ld\"\n", (EndianU64_BtoN(sidxInfo->first_offset)));
 
 	BAILIFERR( GetFileDataN32( aoe, &temp, offset, &offset ) );
 	sidxInfo->reference_count = (UInt16)(temp & 0xFFFF);
@@ -3862,7 +3862,7 @@ OSErr Validate_ESDAtom( atomOffsetEntry *aoe, void *refcon, ValidateBitstreamPro
 	UInt32 flags;
 	UInt64 offset;
 	Ptr esDataP = nil;
-	unsigned long esSize;
+	UInt32 esSize;
 	BitBuffer bb;
 
 	atomprint("<ESD"); vg.tabcnt++;
@@ -4085,7 +4085,7 @@ OSErr Validate_m4ds_Atom( atomOffsetEntry *aoe, void *refcon, char *esName )
 	OSErr err = noErr;
 	UInt64 offset;
 	Ptr esDataP = nil;
-	unsigned long esSize;
+	UInt32 esSize;
 	BitBuffer bb;
 
 	atomprint("<m4ds>\n"); vg.tabcnt++;
