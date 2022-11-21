@@ -33,9 +33,10 @@ CC=     $(shell which g++)
 FLAGS+=-std=c++11 -ffloat-store -Wall -I$(INCDIR) -DLITTLEENDIAN -Wno-multichar -Wno-unknown-pragmas -fpermissive -Wno-write-strings -fno-stack-protector
 
 ifdef COV
-LIBS= -lgcov #-lcurl
-FLAGS+=-fprofile-generate -fprofile-arcs -ftest-coverage -Wl,-lgcov
-LDFLAGS+=" -lgcov --coverage -WL -lgcov"
+OBJDIR=$(BINDIR)
+LIBS= -lgcov
+FLAGS+=--coverage -fno-inline -fno-elide-constructors -fprofile-generate -fprofile-arcs -ftest-coverage -Wl,-lgcov
+LDFLAGS+="--coverage -lgcov --coverage -WL -lgcov"
 endif
 
 ifdef SAN
