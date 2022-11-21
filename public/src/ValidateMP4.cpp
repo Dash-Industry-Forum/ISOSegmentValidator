@@ -245,7 +245,7 @@ int main(void)
 	vg.dvb=false;
 	vg.hbbtv=false;
 	vg.ctawave=false;
-	//vg.indexRange='\0';
+	memset(&vg.indexRange, 0, sizeof(vg.indexRange));
 	vg.pssh_count = 0;
 	vg.sencFound=false;
 	vg.suppressAtomLevel=false;
@@ -443,8 +443,12 @@ int main(void)
 	free(arrayArgc);
 
 
-	if (vg.indexRange != nullptr)
-	  sscanf (vg.indexRange,"%d-%d",&vg.lowerindexRange,&vg.higherindexRange);
+	if (vg.indexRange[0] != 0)
+	  if (2 != sscanf(vg.indexRange,"%d-%d",&vg.lowerindexRange,&vg.higherindexRange))
+	  {
+		fprintf(stderr, "Error parsing range \"%d-%d\" from \"%s\"!\n", vg.lowerindexRange, vg.higherindexRange, vg.indexRange);
+		vg.lowerindexRange = vg.higherindexRange = -1; //reset
+	  }
 
 
 	//=====================
