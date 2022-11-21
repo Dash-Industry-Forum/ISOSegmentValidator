@@ -1285,7 +1285,6 @@ OSErr Validate_ftyp_Atom( atomOffsetEntry *aoe, void *refcon )
 		}
 
 		if (!majorBrandFoundAmongCompatibleBrands) {
-				
 				warnprint("Warning: major brand ('%.4s') not also found in list of compatible brands\n", 
 							 ostypetostr_r(majorBrand,tempstr2));
 			}
@@ -1525,7 +1524,7 @@ OSErr Validate_moov_Atom( atomOffsetEntry *aoe, void *refcon )
 		if (entry->type == 'trak') {
 			++(mir->numTIRs);
 			atomerr = Get_trak_Type(entry, &(mir->tirList[thisTrakIndex]));
-			entry->refconOverride = (long)&(mir->tirList[thisTrakIndex]);
+			entry->refconOverride = (void*)&(mir->tirList[thisTrakIndex]);
 			++thisTrakIndex;
 		}
 	}

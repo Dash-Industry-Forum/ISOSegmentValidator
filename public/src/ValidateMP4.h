@@ -117,7 +117,7 @@ typedef struct atomOffsetEntry {
 	UInt32		atomStartSize;	// size of id & size info, so it is easy to skip
 
 	UInt32 		aoeflags;			// used for processing
-	UInt32 		refconOverride;		// used for processing
+	void* 		refconOverride;		// used for processing
 } atomOffsetEntry;
 
 enum {
