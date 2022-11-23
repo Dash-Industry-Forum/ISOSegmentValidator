@@ -28,7 +28,7 @@ limitations under the License.
 #define scaleToTIR(x) ((long double)(x)/(long double)tir->mediaTimeScale)
 using namespace std;
 
-void checkDASHBoxOrder(long cnt, atomOffsetEntry *list, long segmentInfoSize, bool initializationSegment, UInt64 *segmentSizes, MovieInfoRec *mir) {
+void checkDASHBoxOrder(SInt32 cnt, atomOffsetEntry *list, SInt32 segmentInfoSize, bool initializationSegment, UInt64 *segmentSizes, MovieInfoRec *mir) {
 	UInt64 offset = 0;
 
 	if (initializationSegment) {
@@ -207,7 +207,7 @@ OSErr postprocessFragmentInfo(MovieInfoRec *mir) {
 
 	for (i = 0; i < mir->numFragments; i++) {
 
-		for (long k = 0; k < mir->numTIRs; k++) {
+		for (SInt32 k = 0; k < mir->numTIRs; k++) {
 			mir->moofInfo[i].tfdt[k] = mir->tirList[k].cumulatedTackFragmentDecodeTime;
 		}
 
@@ -241,9 +241,9 @@ OSErr postprocessFragmentInfo(MovieInfoRec *mir) {
 	return noErr;
 }
 
-void initializeLeafInfo(MovieInfoRec *mir, long numMediaSegments) {
+void initializeLeafInfo(MovieInfoRec *mir, SInt32 numMediaSegments) {
 
-	for (long i = 0; i < mir->numTIRs; i++) {
+	for (SInt32 i = 0; i < mir->numTIRs; i++) {
 		if (mir->tirList[i].numLeafs > 0) //Indexed
 		{
 			mir->tirList[i].leafInfo = (LeafInfo *) malloc(mir->tirList[i].numLeafs * sizeof (LeafInfo));
@@ -280,7 +280,7 @@ void initializeLeafInfo(MovieInfoRec *mir, long numMediaSegments) {
 						mir->tirList[i].leafInfo[mediaSegmentNumber - 1].offset = mir->moofInfo[k - 1].offset;
 					}
 
-					if ((long) mediaSegmentNumber == (numMediaSegments - 1)) {
+					if ((SInt32) mediaSegmentNumber == (numMediaSegments - 1)) {
 						mir->tirList[i].leafInfo[mediaSegmentNumber].lastMoofIndex = mir->moofInfo[mir->numFragments - 1].index;
 						mir->tirList[i].leafInfo[mediaSegmentNumber].lastPresentationTime = mir->moofInfo[mir->numFragments - 1].moofLastPresentationTimePerTrack[i];
 						mir->tirList[i].leafInfo[mediaSegmentNumber].presentationEndTime = mir->moofInfo[mir->numFragments - 1].moofPresentationEndTimePerTrack[i];
@@ -402,7 +402,7 @@ void estimatePresentationTimes(MovieInfoRec *mir) {
 }
 
 void processSAP34(MovieInfoRec *mir) {
-	for (long i = 0; i < mir->numTIRs; i++) {
+	for (SInt32 i = 0; i < mir->numTIRs; i++) {
 		TrackInfoRec *tir = &(mir->tirList[i]);
 
 		for (UInt32 j = 0; j < mir->numFragments; j++) {
@@ -645,7 +645,7 @@ void verifyBSS(MovieInfoRec *mir) {
 	if (!vg.bss)
 		return;
 
-	if (mir->numTIRs != (long) vg.numControlTracks)
+	if (mir->numTIRs != (SInt32) vg.numControlTracks)
 		errprint("Number of tracks %d is not equal to number of tracks (%d) in control info, bitstream switching is not possible.", mir->numTIRs, vg.numControlTracks);
 
 	for (int i = 0; i < mir->numTIRs; i++) {
@@ -667,7 +667,7 @@ void verifyBSS(MovieInfoRec *mir) {
 }
 
 void checkSegmentStartWithSAP(int startWithSAP, MovieInfoRec *mir) {
-	for (long i = 0; i < mir->numTIRs; i++) {
+	for (SInt32 i = 0; i < mir->numTIRs; i++) {
 		bool segmentStarted = false;
 		int segmentCount = 0;
 
@@ -713,7 +713,7 @@ OSErr processIndexingInfo(MovieInfoRec *mir) {
 
 	int firstMediaSegment = vg.initializationSegment ? 1 : 0;
 
-	for (long trackIndex = 0; trackIndex < mir->numTIRs; trackIndex++) {
+	for (SInt32 trackIndex = 0; trackIndex < mir->numTIRs; trackIndex++) {
 		for (i = firstMediaSegment; i < (UInt32) vg.segmentInfoSize; i++) {
 			SidxInfoRec *firstSidxOfSegment = NULL;
 
@@ -951,7 +951,7 @@ OSErr processIndexingInfo(MovieInfoRec *mir) {
 
 }
 
-void processBuffering(long cnt, atomOffsetEntry *list, MovieInfoRec *mir) {
+void processBuffering(SInt32 cnt, atomOffsetEntry *list, MovieInfoRec *mir) {
 
 	SInt64 initSize = 0;
 	SInt64 offset;
@@ -1166,7 +1166,7 @@ void processBuffering(long cnt, atomOffsetEntry *list, MovieInfoRec *mir) {
 	return;
 }
 
-void checkCMAFBoxOrder(long cnt, atomOffsetEntry *list, long segmentInfoSize, bool CMAFHeader, UInt64 *segmentSizes)
+void checkCMAFBoxOrder(SInt32 cnt, atomOffsetEntry *list, SInt32 segmentInfoSize, bool CMAFHeader, UInt64 *segmentSizes)
 {
 	UInt64 offset = 0;
 	//In this function,all top level boxes like ftyp, moov , moof etc are checked for order. Other lower level boxes have separate functions.
@@ -1242,7 +1242,7 @@ void checkCMAFBoxOrder(long cnt, atomOffsetEntry *list, long segmentInfoSize, bo
 	}
 }
 
-void checkCMAFBoxOrder_moov(long cnt,atomOffsetEntry *list)
+void checkCMAFBoxOrder_moov(SInt32 cnt,atomOffsetEntry *list)
 {
 	bool ord_err=false;
 	char err_order[50];
@@ -1268,7 +1268,7 @@ void checkCMAFBoxOrder_moov(long cnt,atomOffsetEntry *list)
 		
 }
 
-void checkCMAFBoxOrder_trak(long cnt,atomOffsetEntry *list)
+void checkCMAFBoxOrder_trak(SInt32 cnt,atomOffsetEntry *list)
 {
 	int edts_flag=0;
 	bool ord_err=false;
@@ -1297,7 +1297,7 @@ void checkCMAFBoxOrder_trak(long cnt,atomOffsetEntry *list)
 	
 }
 
-void checkCMAFBoxOrder_mdia(long cnt,atomOffsetEntry *list)
+void checkCMAFBoxOrder_mdia(SInt32 cnt,atomOffsetEntry *list)
 {
 	int elng_flag=0;
 	bool ord_err=false;
@@ -1326,7 +1326,7 @@ void checkCMAFBoxOrder_mdia(long cnt,atomOffsetEntry *list)
 	}
 	
 }
-void checkCMAFBoxOrder_minf(long cnt,atomOffsetEntry *list)
+void checkCMAFBoxOrder_minf(SInt32 cnt,atomOffsetEntry *list)
 {
 	bool ord_err=false;
 	char err_order[50];
@@ -1349,7 +1349,7 @@ void checkCMAFBoxOrder_minf(long cnt,atomOffsetEntry *list)
 	}
 }
 
-void checkCMAFBoxOrder_stbl(long cnt,atomOffsetEntry *list)
+void checkCMAFBoxOrder_stbl(SInt32 cnt,atomOffsetEntry *list)
 {
 	bool ord_err=false;
 	char err_order[50];
@@ -1376,7 +1376,7 @@ void checkCMAFBoxOrder_stbl(long cnt,atomOffsetEntry *list)
 	}
 }
 
-void checkCMAFBoxOrder_sinf(long cnt,atomOffsetEntry *list)
+void checkCMAFBoxOrder_sinf(SInt32 cnt,atomOffsetEntry *list)
 {
 	bool ord_err=false;
 	char err_order[50];
@@ -1398,7 +1398,7 @@ void checkCMAFBoxOrder_sinf(long cnt,atomOffsetEntry *list)
 		errprint("CMAF check violated (ordinality/nesting) : \"In 'sinf', the allowed box order as per Section 7.3.1. of ISO/IEC 23000-19(E) is: frma--schm--schi \", but order found is: %s \n", err_order);
 	}
 }
-void checkCMAFBoxOrder_moof(long cnt,atomOffsetEntry *list)
+void checkCMAFBoxOrder_moof(SInt32 cnt,atomOffsetEntry *list)
 {
 	bool ord_err=false;
 	char err_order[50];
@@ -1419,7 +1419,7 @@ void checkCMAFBoxOrder_moof(long cnt,atomOffsetEntry *list)
 	}
 }
 
-void checkCMAFBoxOrder_traf(long cnt,atomOffsetEntry *list)
+void checkCMAFBoxOrder_traf(SInt32 cnt,atomOffsetEntry *list)
 {
 	bool ord_err=false;
 	char err_order[50];

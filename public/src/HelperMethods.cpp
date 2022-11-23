@@ -25,17 +25,17 @@ limitations under the License.
 //==========================================================================================
 
 int FindAtomOffsets( atomOffsetEntry *aoe, UInt64 minOffset, UInt64 maxOffset, 
-			long *atomCountOut, atomOffsetEntry **atomOffsetsOut )
+			SInt32 *atomCountOut, atomOffsetEntry **atomOffsetsOut )
 {
 	int err = noErr;
-	long cnt = 0;
+	SInt32 cnt = 0;
 	atomOffsetEntry *atomOffsets = nil;
-	long max = 20;
+	SInt32 max = 20;
 	startAtomType startAtom;
 	UInt64 largeSize;
 	uuidType uuid;
 	UInt64 curOffset = minOffset;
-	long minAtomSize;
+	SInt32 minAtomSize;
 	
 	printf ("<%s> : min %08lX max %08lX\n", __FUNCTION__, minOffset, maxOffset);
 
@@ -206,7 +206,7 @@ void logtempInfo(MovieInfoRec *mir)
 		return;
 	}
 
-	fprintf(leafInfoFile,"%ld\n",mir->numTIRs);
+	fprintf(leafInfoFile,"%u\n",mir->numTIRs);
 
 	for(int i = 0 ; i < mir->numTIRs ; i++)
 	{
@@ -249,7 +249,7 @@ void logLeafInfo(MovieInfoRec *mir)
 
 	fprintf(leafInfoFile,"%u\n",vg.accessUnitDurationNonIndexedTrack);
 
-	fprintf(leafInfoFile,"%ld\n",mir->numTIRs);
+	fprintf(leafInfoFile,"%u\n",mir->numTIRs);
 
 
 	for(int i = 0 ; i < mir->numTIRs ; i++)

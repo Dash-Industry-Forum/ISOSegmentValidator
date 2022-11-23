@@ -106,8 +106,8 @@ typedef struct MovieHeaderCommonRecord {
 	SInt16						  preferredVolume;		   	// must be 1.0 for mp4
 	short						   reserved1;					// must be 0
 
-	long							preferredLong1;				// must be 0 for mp4
-	long							preferredLong2;				// must be 0 for mp4
+	SInt32							preferredLong1;				// must be 0 for mp4
+	SInt32							preferredLong2;				// must be 0 for mp4
 
 	MatrixRecord					matrix;						// must be identity for mp4
 
@@ -120,7 +120,7 @@ typedef struct MovieHeaderCommonRecord {
 	TimeValue					   selectionDuration;  		// must be 0 for mp4
 	TimeValue					   currentTime;		  		// must be 0 for mp4
 
-	long							nextTrackID;
+	SInt32							nextTrackID;
 } MovieHeaderCommonRecord;
 
 typedef struct MovieHeaderVers0Record {
@@ -1009,7 +1009,7 @@ OSErr Validate_dref_Atom( atomOffsetEntry *aoe, void *refcon )
 	{
 		UInt64 minOffset, maxOffset;
 		atomOffsetEntry *entry;
-		long cnt;
+		SInt32 cnt;
 		atomOffsetEntry *list;
 		int i;
 
@@ -1148,7 +1148,7 @@ bail:
 
 
 typedef struct CompositionTimeToSampleNum {
-	long			 sampleCount;
+	SInt32			 sampleCount;
 	TimeValue		sampleOffset;
 } CompositionTimeToSampleNum;
 
@@ -2117,7 +2117,7 @@ OSErr Validate_stsd_Atom( atomOffsetEntry *aoe, void *refcon )
 	{
 		UInt64 minOffset, maxOffset;
 		atomOffsetEntry *entry;
-		long cnt;
+		SInt32 cnt;
 		atomOffsetEntry *list;
 		int i;
 
@@ -2315,7 +2315,7 @@ OSErr Validate_vide_SD_Entry( atomOffsetEntry *aoe, void *refcon )
 		{
 			UInt64 minOffset, maxOffset;
 			atomOffsetEntry *entry;
-			long cnt;
+			SInt32 cnt;
 			atomOffsetEntry *list;
 			int i;
 			int is_protected = 0;
@@ -3493,7 +3493,7 @@ OSErr Validate_soun_SD_Entry( atomOffsetEntry *aoe, void *refcon )
 		UInt64 minOffset;
 		UInt64 maxOffset;
 		atomOffsetEntry *entry;
-		long cnt;
+		SInt32 cnt;
 		atomOffsetEntry *list;
 		int i;
 		int sinfFound=0;
@@ -3646,7 +3646,7 @@ OSErr Validate_subt_SD_Entry( atomOffsetEntry *aoe, void *refcon )
 		UInt64 minOffset, maxOffset;
 		atomOffsetEntry *entry;
 		atomOffsetEntry *list;
-		long cnt;
+		SInt32 cnt;
 		int i;
 
 		minOffset = offset;
@@ -3697,7 +3697,7 @@ OSErr Validate_text_SD_Entry( atomOffsetEntry *aoe, void *refcon )
 		UInt64 minOffset, maxOffset;
 		atomOffsetEntry *entry;
 		atomOffsetEntry *list;
-		long cnt;
+		SInt32 cnt;
 		int i;
 		
 		minOffset = offset;
@@ -3754,7 +3754,7 @@ OSErr Validate_mp4_SD_Entry( atomOffsetEntry *aoe, void *refcon, ValidateBitstre
 	{
 		UInt64 minOffset, maxOffset;
 		atomOffsetEntry *entry;
-		long cnt;
+		SInt32 cnt;
 		atomOffsetEntry *list;
 		int i;
 
@@ -4122,7 +4122,7 @@ OSErr Validate_stpp_Atom( atomOffsetEntry *aoe, void *refcon, char *esname )
 	char *auxiliary_mime_types;
 	UInt64 minOffset, maxOffset;
 	atomOffsetEntry *entry;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
 	int i;
 
@@ -4197,7 +4197,7 @@ OSErr Validate_wvtt_Atom( atomOffsetEntry *aoe, void *refcon, char *esname )
 	UInt64 minOffset, maxOffset;
 	atomOffsetEntry *entry;
 	atomOffsetEntry *list;
-	long cnt;
+	SInt32 cnt;
 	int i;
 	
 	atomprint("<%s", esname); vg.tabcnt++;
@@ -4566,9 +4566,9 @@ bail:
 OSErr Validate_schi_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -4912,7 +4912,7 @@ OSErr Validate_ipro_Atom( atomOffsetEntry *aoe, void *refcon )
 		UInt64 minOffset;
 		UInt64 maxOffset;
 		atomOffsetEntry *entry;
-		long cnt;
+		SInt32 cnt;
 		atomOffsetEntry *list;
 		int i;
 
@@ -5018,7 +5018,7 @@ OSErr Validate_iinf_Atom( atomOffsetEntry *aoe, void *refcon )
 		UInt64 minOffset;
 		UInt64 maxOffset;
 		atomOffsetEntry *entry;
-		long cnt;
+		SInt32 cnt;
 		atomOffsetEntry *list;
 		int i;
 

@@ -76,7 +76,7 @@ OSErr CheckValuesInContext( UInt32 bufferSize, UInt32 maxBitrate, UInt32 avgBitr
 
 //==========================================================================================
 
-OSErr Validate_iods_OD_Bits( Ptr odDataP, unsigned long odSize, Boolean fileForm )
+OSErr Validate_iods_OD_Bits( Ptr odDataP, UInt32 odSize, Boolean fileForm )
 {
 	OSErr err;
 	BitBuffer thebb;

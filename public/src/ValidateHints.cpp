@@ -271,7 +271,7 @@ OSErr Validate_Hint_Track( atomOffsetEntry *aoe, TrackInfoRec *tir )
 	HintInfoRec	hir = {};
 	
 	UInt64 minOffset, maxOffset;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
 	OSErr		tempErr;
 
@@ -360,7 +360,7 @@ OSErr Validate_Hint_Track( atomOffsetEntry *aoe, TrackInfoRec *tir )
 	H_ATOM_PRINT_INCR(("<hint_SAMPLE_DATA>\n"));
 	if(!vg.dashSegment)
 		for (i = startSampleNum; i <= endSampleNum; i++) {
-			if ((vg.samplenumber==0) || (vg.samplenumber==(long)i)) {
+			if ((vg.samplenumber==0) || (vg.samplenumber==(SInt32)i)) {
 				err = GetSampleOffsetSize( tir, i, &sampleOffset, &sampleSize, &sampleDescriptionIndex );
 				if (err != noErr) {
 					errprint("couldn't GetSampleOffsetSize for sample %ld (err %ld)\n", i, err);
@@ -1093,7 +1093,7 @@ static OSErr Validate_hint_udta_Atom( atomOffsetEntry *aoe, void *refcon )
 	OSErr			err = noErr;
 	OSErr atomerr = noErr;
 	UInt64 minOffset, maxOffset;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
 	
 	minOffset = aoe->offset + aoe->atomStartSize;
@@ -1750,10 +1750,10 @@ static OSErr Validate_isma_attribute( HintInfoRec *hir, char *inValue)
 {
 #pragma unused(hir)
 	OSErr		err = noErr;
-	long	profile, i;
+	SInt32	profile, i;
 	float	lowest, authored;
 	
-	i = sscanf(inValue,"%ld,%f,%f",&profile,&lowest,&authored);
+	i = sscanf(inValue,"%u,%f,%f",&profile,&lowest,&authored);
 	if (i<3) errprint("Bad ISMA compliance attribute %s\n",inValue);
 	else {
 		if ((profile<0) || (profile>4)) errprint("Bad ISMA compliance profile value %s\n",inValue);
@@ -1809,7 +1809,7 @@ OSErr Base64DecodeToBuffer(const char *inData, UInt32 *ioEncodedLength, char *ou
 {
 	OSErr		err = noErr;
 
-	long		encodedDataProcessed = 0;
+	SInt32		encodedDataProcessed = 0;
 	const char	*current;
 	const char	*end;
 	char		lookupChar;
@@ -2128,7 +2128,7 @@ static Boolean get_next_fmtp_param(char **inLine, char **outTagString, char **ou
 	Boolean		found = false;
 	Ptr			tag = NULL;
 	Ptr			value = NULL;
-	long		length;
+	SInt32		length;
 	
 
 	// strip off leading spaces?
@@ -2202,7 +2202,7 @@ bail:
 static OSErr get_original_track_info(UInt32 inRefTrackID, TrackInfoRec **outTIR)
 {
 	OSErr			err = noErr;	
-	long			i;
+	SInt32			i;
 	MovieInfoRec	*mir = vg.mir;
 	
 	if (mir == NULL) {

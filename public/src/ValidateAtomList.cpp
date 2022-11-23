@@ -45,9 +45,9 @@ OSErr ValidateFileAtoms( atomOffsetEntry *aoe, void *refcon )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -107,7 +107,7 @@ OSErr ValidateFileAtoms( atomOffsetEntry *aoe, void *refcon )
 		vg.mir->moofInfo = (MoofInfoRec *)malloc(vg.mir->numFragments*sizeof(MoofInfoRec));
 		vg.mir->processedFragments = 0;
 
-		for (i = 0; i < (long)vg.mir->numFragments ; i++)
+		for (i = 0; i < (SInt32)vg.mir->numFragments ; i++)
 		{
 			vg.mir->moofInfo[i].compositionInfoMissingPerTrack = (Boolean*)malloc(vg.mir->numTIRs*sizeof(Boolean));
 			vg.mir->moofInfo[i].moofEarliestPresentationTimePerTrack = (long double*)malloc(vg.mir->numTIRs*sizeof(long double));
@@ -264,9 +264,9 @@ OSErr Validate_dinf_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -307,9 +307,9 @@ OSErr Validate_edts_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -358,9 +358,9 @@ OSErr Validate_minf_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -477,9 +477,9 @@ OSErr Validate_mdia_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -547,16 +547,16 @@ bail:
 OSErr Get_trak_Type( atomOffsetEntry *aoe, TrackInfoRec *tir )
 {
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
 
-	long entrycnt;
+	SInt32 entrycnt;
 	atomOffsetEntry *entrylist;
 	atomOffsetEntry *entryentry;
-	long	j;
+	SInt32	j;
 	
 	minOffset = aoe->offset + aoe->atomStartSize;
 	maxOffset = aoe->offset + aoe->size - aoe->atomStartSize;
@@ -589,9 +589,9 @@ bail:
 OSErr Validate_trak_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -674,7 +674,7 @@ OSErr Validate_trak_Atom( atomOffsetEntry *aoe, void *refcon )
 				BitBuffer bb;
 				
 				sampleprint("<vide_SAMPLE_DATA>\n"); vg.tabcnt++;
-					for (i = 1; i <= (long)tir->sampleSizeEntryCnt; i++) {
+					for (i = 1; i <= (SInt32)tir->sampleSizeEntryCnt; i++) {
 						if ((vg.samplenumber==0) || (vg.samplenumber==i)) {
 							err = GetSampleOffsetSize( tir, i, &sampleOffset, &sampleSize, &sampleDescriptionIndex );
 							sampleprint("<sample num=\"%d\" offset=\"%s\" size=\"%d\" />\n",i,int64toxstr(sampleOffset),sampleSize); vg.tabcnt++;
@@ -705,7 +705,7 @@ OSErr Validate_trak_Atom( atomOffsetEntry *aoe, void *refcon )
 				BitBuffer bb;
 				
 				sampleprint("<audi_SAMPLE_DATA>\n"); vg.tabcnt++;
-					for (i = 1; i <= (long)tir->sampleSizeEntryCnt; i++) {
+					for (i = 1; i <= (SInt32)tir->sampleSizeEntryCnt; i++) {
 						if ((vg.samplenumber==0) || (vg.samplenumber==i)) {
 							err = GetSampleOffsetSize( tir, i, &sampleOffset, &sampleSize, &sampleDescriptionIndex );
 							sampleprint("<sample num=\"%d\" offset=\"%s\" size=\"%d\" />\n",i,int64toxstr(sampleOffset),sampleSize); vg.tabcnt++;
@@ -736,7 +736,7 @@ OSErr Validate_trak_Atom( atomOffsetEntry *aoe, void *refcon )
 				BitBuffer bb;
 				
 				sampleprint("<odsm_SAMPLE_DATA>\n"); vg.tabcnt++;
-				for (i = 1; i <= (long)tir->sampleSizeEntryCnt; i++) {
+				for (i = 1; i <= (SInt32)tir->sampleSizeEntryCnt; i++) {
 					if ((vg.samplenumber==0) || (vg.samplenumber==i)) {
 						err = GetSampleOffsetSize( tir, i, &sampleOffset, &sampleSize, &sampleDescriptionIndex );
 						sampleprint("<sample num=\"%d\" offset=\"%s\" size=\"%d\" />\n",1,int64toxstr(sampleOffset),sampleSize); vg.tabcnt++;
@@ -766,7 +766,7 @@ OSErr Validate_trak_Atom( atomOffsetEntry *aoe, void *refcon )
 				Ptr dataP = nil;
 				BitBuffer bb;
 				sampleprint("<sdsm_SAMPLE_DATA>\n"); vg.tabcnt++;
-				for (i = 1; i <= (long)tir->sampleSizeEntryCnt; i++) {
+				for (i = 1; i <= (SInt32)tir->sampleSizeEntryCnt; i++) {
 					if ((vg.samplenumber==0) || (vg.samplenumber==i)) {
 						err = GetSampleOffsetSize( tir, i, &sampleOffset, &sampleSize, &sampleDescriptionIndex );
 						sampleprint("<sample num=\"%d\" offset=\"%s\" size=\"%d\" />\n",1,int64toxstr(sampleOffset),sampleSize); vg.tabcnt++;
@@ -808,9 +808,9 @@ bail:
 OSErr Validate_stbl_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -973,9 +973,9 @@ bail:
 OSErr Validate_mvex_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -1063,20 +1063,20 @@ bail:
 
 //==========================================================================================
 
-OSErr ValidateAtomOfType( OSType theType, long flags, ValidateAtomTypeProcPtr validateProc, 
-		long cnt, atomOffsetEntry *list, void *refcon )
+OSErr ValidateAtomOfType( OSType theType, SInt32 flags, ValidateAtomTypeProcPtr validateProc, 
+		SInt32 cnt, atomOffsetEntry *list, void *refcon )
 {
-	long i;
+	SInt32 i;
 	OSErr err = noErr;
 	char cstr[5] = {};
-	long typeCnt = 0;
+	SInt32 typeCnt = 0;
 	atomOffsetEntry *entry;
 	OSErr atomerr;
 	atompathType curatompath;
 	Boolean curatomprint;
 	Boolean cursampleprint;
 	Boolean traf_exists = false;
-	long traf_cnt = 0;
+	SInt32 traf_cnt = 0;
 	
 	cstr[0] = (theType >> 24) & 0xff;
 	cstr[1] = (theType >> 16) & 0xff;
@@ -1459,12 +1459,12 @@ OSErr Validate_moov_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
-	long trakCnt = 0;
-	long thisTrakIndex = 0;
+	SInt32 trakCnt = 0;
+	SInt32 thisTrakIndex = 0;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
 	MovieInfoRec		*mir = NULL;
@@ -1680,7 +1680,7 @@ OSErr Validate_moov_Atom( atomOffsetEntry *aoe, void *refcon )
 		
 		BAILIFNULL( trk = (track_track *)calloc(trk_cnt,sizeof(track_track)), allocFailedErr );
 
-		for (i=0; i<(long)trk_cnt; ++i) {
+		for (i=0; i<(SInt32)trk_cnt; ++i) {
 			// find the chunk counts for each track and setup structures
 			tir = &(mir->tirList[i]);
 			totalChunks += tir->chunkOffsetEntryCnt;
@@ -1702,7 +1702,7 @@ OSErr Validate_moov_Atom( atomOffsetEntry *aoe, void *refcon )
 	
 			// find the next lowest chunk start
 			lowest = -1;		// next chunk not identified
-			for (i=0; i<(long)trk_cnt; i++) {
+			for (i=0; i<(SInt32)trk_cnt; i++) {
 				UInt64 offset;
 				tir = &(mir->tirList[i]);
 				if (trk[i].chunk_num <= trk[i].chunk_cnt) {		// track has chunks to process
@@ -1810,7 +1810,7 @@ OSErr Validate_moov_Atom( atomOffsetEntry *aoe, void *refcon )
 			
 			// see whether we have eaten all chunks for all tracks			
 			done = 1;
-			for (i=0; i<(long)trk_cnt; i++) {
+			for (i=0; i<(SInt32)trk_cnt; i++) {
 				if (trk[i].chunk_num <= trk[i].chunk_cnt) { done = 0; break; }
 			}
 		} while (done != 1);
@@ -1833,9 +1833,9 @@ bail:
 OSErr Validate_moof_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -1939,9 +1939,9 @@ bail:
 OSErr Validate_traf_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -2024,7 +2024,7 @@ OSErr Validate_traf_Atom( atomOffsetEntry *aoe, void *refcon )
 		if (!err) err = atomerr;
 	}
 	
-	long flags;
+	SInt32 flags;
 
 	flags = kTypeAtomFlagCanHaveAtMostOne;
 
@@ -2064,7 +2064,7 @@ OSErr Validate_traf_Atom( atomOffsetEntry *aoe, void *refcon )
 
 
 	//Accumulate durations now for later checking
-	for (i = 0; i < (long)trafInfo->numTrun; i++)
+	for (i = 0; i < (SInt32)trafInfo->numTrun; i++)
 	{
 		trafInfo->cummulatedSampleDuration+=trafInfo->trunInfo[i].cummulatedSampleDuration;
 
@@ -2222,9 +2222,9 @@ void dispose_mir( MovieInfoRec *mir )
 OSErr Validate_tref_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -2287,9 +2287,9 @@ OSErr Validate_udta_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -2392,9 +2392,9 @@ bail:
 OSErr Validate_moovhnti_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -2436,9 +2436,9 @@ OSErr Validate_sinf_Atom( atomOffsetEntry *aoe, void *refcon, UInt32 flags )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 minOffset, maxOffset;
@@ -2493,9 +2493,9 @@ OSErr Validate_meta_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	long cnt;
+	SInt32 cnt;
 	atomOffsetEntry *list;
-	long i;
+	SInt32 i;
 	OSErr atomerr = noErr;
 	atomOffsetEntry *entry;
 	UInt64 offset, minOffset, maxOffset;

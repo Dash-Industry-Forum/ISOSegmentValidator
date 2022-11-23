@@ -91,7 +91,7 @@ int GetFileData( atomOffsetEntry *aoe, void *dataP, UInt64 offset64, UInt64 size
 {
 #pragma unused(aoe)
 	int err = 0;
-	long amtRead = 0;
+	SInt32 amtRead = 0;
 	UInt64 size = size64;
 	
 	if (offset64 > 0x7FFFFFFFL) {

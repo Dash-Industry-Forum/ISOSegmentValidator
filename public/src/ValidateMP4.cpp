@@ -945,7 +945,7 @@ void atomprint(const char *formatStr, ...)
 
 	if (vg.printatom) {
 		printf ("vg.printatom\n");
-		long tabcnt = vg.tabcnt;
+		SInt32 tabcnt = vg.tabcnt;
 		while (tabcnt-- > 0) {
 			fprintf(_stdout,myTAB);
 		}
@@ -953,7 +953,7 @@ void atomprint(const char *formatStr, ...)
 	}
 
 	if(vg.atomxml){
-		long tabcnt = vg.tabcnt;
+		SInt32 tabcnt = vg.tabcnt;
  		while (tabcnt-- > 0) {
  			fprintf(f,myTAB);
  		}
@@ -999,7 +999,7 @@ void atomprintdetailed(const char *formatStr, ...)
 	va_start(ap, formatStr);
 
 	if (vg.printatom && vg.print_fulltable) {
-		long tabcnt = vg.tabcnt;
+		SInt32 tabcnt = vg.tabcnt;
 		while (tabcnt-- > 0) {
 			fprintf(_stdout,myTAB);
 		}
@@ -1015,7 +1015,7 @@ void sampleprint(const char *formatStr, ...)
 	va_start(ap, formatStr);
 
 	if (vg.printsample) {
-		long tabcnt = vg.tabcnt;
+		SInt32 tabcnt = vg.tabcnt;
 		while (tabcnt-- > 0) {
 			fprintf(_stdout,myTAB);
 		}
@@ -1535,7 +1535,7 @@ void addEscapedChar( char *str, char c )
 	strcat(str, addc);
 }
 
-void addAtomToPath( atompathType workingpath, OSType atomId, long atomIndex, atompathType curpath )
+void addAtomToPath( atompathType workingpath, OSType atomId, SInt32 atomIndex, atompathType curpath )
 {
 	strcpy( curpath, workingpath );
 	if (workingpath[0])
@@ -1545,7 +1545,7 @@ void addAtomToPath( atompathType workingpath, OSType atomId, long atomIndex, ato
 	addEscapedChar(workingpath, (atomId>> 8) & 0xff);
 	addEscapedChar(workingpath, (atomId>> 0) & 0xff);
 	strcat( workingpath, "-");
-	sprintf(&workingpath[strlen(workingpath)],"%ld",atomIndex);
+	sprintf(&workingpath[strlen(workingpath)],"%u", atomIndex);
 }
 
 void restoreAtomPath( atompathType workingpath, atompathType curpath )
