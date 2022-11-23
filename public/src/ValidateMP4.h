@@ -57,7 +57,7 @@ limitations under the License.
 #endif
 
 typedef char *Ptr;
-typedef unsigned long OSType;
+typedef uint32_t OSType;
 typedef unsigned char Boolean;
 typedef short OSErr;
 

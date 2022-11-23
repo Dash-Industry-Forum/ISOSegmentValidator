@@ -1210,11 +1210,11 @@ OSErr Validate_ftyp_Atom( atomOffsetEntry *aoe, void *refcon )
 {
 #pragma unused(refcon)
 	OSErr err = noErr;
-	UInt64 offset;
-	OSType majorBrand;
-	UInt32 version;
-	UInt32 compatBrandListSize, numCompatibleBrands;
-	char tempstr1[5], tempstr2[5];
+	UInt64 offset = 0;
+	OSType majorBrand = 0;
+	UInt32 version = 0;
+	UInt32 compatBrandListSize = 0, numCompatibleBrands = 0;
+	char tempstr1[5] = {}, tempstr2[5] = {};
 	
 	offset = aoe->offset + aoe->atomStartSize;
 	
