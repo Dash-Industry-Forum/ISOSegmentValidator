@@ -73,7 +73,7 @@ void checkDASHBoxOrder(SInt32 cnt, atomOffsetEntry *list, SInt32 segmentInfoSize
 				bool fragmentInSegmentFound = false;
 				bool moovInSegmentFound = false;
 
-				for (int j = i; list[j].offset < (offset + segmentSizes[index]); j++) {
+				for (int j = i; list[j].offset < (offset + segmentSizes[index]) && j < cnt; j++) {
 					if (list[j].type == 'ftyp') {
 						ftypFound = 1;
 					} else if (list[j].type == 'moov') {
@@ -246,7 +246,7 @@ void initializeLeafInfo(MovieInfoRec *mir, SInt32 numMediaSegments) {
 	for (SInt32 i = 0; i < mir->numTIRs; i++) {
 		if (mir->tirList[i].numLeafs > 0) //Indexed
 		{
-			mir->tirList[i].leafInfo = (LeafInfo *) malloc(mir->tirList[i].numLeafs * sizeof (LeafInfo));
+			mir->tirList[i].leafInfo = (LeafInfo *) calloc(mir->tirList[i].numLeafs, sizeof (LeafInfo));
 
 			for (UInt32 j = 0; j < mir->tirList[i].numLeafs; j++)
 				mir->tirList[i].leafInfo[j].segmentIndexed = true;
@@ -255,7 +255,7 @@ void initializeLeafInfo(MovieInfoRec *mir, SInt32 numMediaSegments) {
 		} else {
 			mir->tirList[i].numLeafs = numMediaSegments;
 
-			mir->tirList[i].leafInfo = (LeafInfo *) malloc(mir->tirList[i].numLeafs * sizeof (LeafInfo));
+			mir->tirList[i].leafInfo = (LeafInfo *) calloc(mir->tirList[i].numLeafs, sizeof (LeafInfo));
 
 			for (UInt32 j = 0; j < mir->tirList[i].numLeafs; j++)
 				mir->tirList[i].leafInfo[j].segmentIndexed = false;

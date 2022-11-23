@@ -77,7 +77,7 @@ typedef int8_t SInt8;
 typedef int32_t SInt32;
 typedef uint32_t UInt32;
 typedef int32_t Int32;
-typedef int64_t SInt16;
+typedef int16_t SInt16;
 typedef uint16_t UInt16;
 typedef UInt32 UnsignedFixed;
 
