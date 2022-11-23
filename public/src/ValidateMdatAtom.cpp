@@ -1082,7 +1082,7 @@ bail:
 //==========================================================================================
 OSErr Validate_mdat_Atom( atomOffsetEntry *aoe, void *refcon)
 {
-	printf ("<%s> : ent : aoe %p refcon %p\n", __FUNCTION__, aoe, refcon);
+	//printf ("<%s> : ent : aoe %p refcon %p\n", __FUNCTION__, aoe, refcon);
 	OSErr err = noErr;
 	unsigned int size;
 	unsigned int type;
@@ -1121,6 +1121,6 @@ bail:
 	atomprint("</mdat>\n");
 
 	free(bsDataP);
-	printf ("<%s> : ret : err %d\n", __FUNCTION__, err);
+	//printf ("<%s> : ret : err %d\n", __FUNCTION__, err);
 	return err;
 }
