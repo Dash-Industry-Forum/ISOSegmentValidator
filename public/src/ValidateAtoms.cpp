@@ -2963,6 +2963,8 @@ OSErr Validate_sgpd_Atom( atomOffsetEntry *aoe, void *refcon )
 		{
 			if(sgpdInfo->default_length == 0)
 				BAILIFERR( GetFileDataN32( aoe, &sgpdInfo->description_length[i], offset, &offset ));
+			else
+				sgpdInfo->description_length[i] = sgpdInfo->default_length;
 
 			sgpdInfo->SampleGroupDescriptionEntry[i] = (UInt32 *)malloc((sgpdInfo->default_length == 0 ? sgpdInfo->description_length[i] : sgpdInfo->default_length)*sizeof(UInt32));
 		}
