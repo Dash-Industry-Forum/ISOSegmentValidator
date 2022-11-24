@@ -1215,7 +1215,7 @@ void checkCMAFBoxOrder(SInt32 cnt, atomOffsetEntry *list, SInt32 segmentInfoSize
 
 
 				bool cmafFragmentInCMAFSegmentFound = false;
-				for (int j = i; list[j].offset < (offset + segmentSizes[index]); j++) {//For all boxes inside a Media Segment.
+				for (int j = i; list[j].offset < (offset + segmentSizes[index]) && j < cnt; j++) {//For all boxes inside a Media Segment.
 					 if(list[j].type == 'emsg' && cmafFragmentInCMAFSegmentFound){
 						 
 						errprint("CMAF check violated: Section 7.4.5, \"If 'emsg' is present, SHALL precede the first 'moof' in the CMAF Fragment \", in segment %d 'moof' found before 'emsg'\n", index);

@@ -897,16 +897,21 @@ OSErr Validate_stbl_Atom( atomOffsetEntry *aoe, void *refcon )
 	if (!err) err = atomerr;
 	
 	// Process 'sgpd' atoms
-	atomerr = ValidateAtomOfType( 'sgpd', kTypeAtomFlagCanHaveAtMostOne, 
-		Validate_sgpd_Atom, cnt, list, tir );
-	if (!err) err = atomerr;
-		
-		// Process 'subs' atoms
-		if(vg.cmaf){
-			atomerr = ValidateAtomOfType( 'subs', 0, 
-					Validate_subs_Atom, cnt, list, tir );
-			if (!err) err = atomerr;
-		}
+	if (0) {
+		UInt32 moofIndex = getMoofIndexByOffset(vg.mir->moofInfo, vg.mir->numFragments, aoe->offset);
+		MoofInfoRec *moofInfoRec = &vg.mir->moofInfo[moofIndex];
+		atomerr = ValidateAtomOfType( 'sgpd', kTypeAtomFlagCanHaveAtMostOne, 
+			Validate_sgpd_Atom, cnt, list, &moofInfoRec->trafInfo[moofInfoRec->processedTrackFragments]);
+		if (!err) err = atomerr;
+	}
+
+	// Process 'subs' atoms
+	if(vg.cmaf){
+		atomerr = ValidateAtomOfType( 'subs', 0, 
+				Validate_subs_Atom, cnt, list, tir );
+		if (!err) err = atomerr;
+	}
+
 	//
 	for (i = 0; i < cnt; i++) {
 		entry = &list[i];
