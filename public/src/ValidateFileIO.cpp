@@ -271,7 +271,7 @@ int GetSampleOffsetSize( TrackInfoRec *tir, UInt32 sampleNum, UInt64 *offsetOut,
 	UInt32 size = 0;
 	UInt32 chunkNum;
 	UInt32 sampleDelta;
-	UInt64 offset;
+	UInt64 offset = 0;
 	UInt32 sampleDescriptionIndex = 0;
 	
 	if (sampleNum > tir->sampleSizeEntryCnt) {
@@ -325,7 +325,7 @@ int GetChunkOffsetSize( TrackInfoRec *tir, UInt32 chunkNum, UInt64 *offsetOut, U
 	UInt32 sampleCnt = 1;
 	UInt32 samplesPerChunk;
 	UInt32 size = 0;
-	UInt64 offset;
+	UInt64 offset = 0;
 	UInt32 sampleDescriptionIndex = 0;
 	
 	if (chunkNum > tir->chunkOffsetEntryCnt) {

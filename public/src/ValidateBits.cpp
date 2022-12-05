@@ -282,7 +282,7 @@ SInt32 read_golomb_sev(BitBuffer *bb, OSErr *errout)
 {
 	OSErr err = noErr;
 	UInt32 uev;
-	SInt32 val;
+	SInt32 val = 0;
 	
 	uev = read_golomb_uev( bb, &err ); if (err) goto bail;
 	if (uev & 1)

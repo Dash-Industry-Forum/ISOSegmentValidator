@@ -799,7 +799,7 @@ static OSErr Validate_Generic_MPEG4_Audio_Payload( char *inPayload, UInt32 inLen
 	HintInfoRec		*hir = (HintInfoRec*)inRefCon;
 	UInt32		temp32;
 	UInt32		numHeaders;
-	UInt16		auLength;
+	UInt16		auLength = 0;
 	char		*headerCurrent;
 	char		*auCurrent;
 	char		*auMax;
