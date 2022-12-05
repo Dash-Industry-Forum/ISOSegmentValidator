@@ -8,10 +8,10 @@
 
 NAME=  ValidateMP4
 
-### include debug information: 1=yes, 0=no
-DBG=1
-SAN=0
-COV=0
+### include debug information: 1=yes, 'empty'=no (don)
+DBG=
+SAN=
+COV=
 
 FLAGS+=-Wall -Wextra -Werror
 
@@ -50,7 +50,7 @@ SUFFIX= #.dbg
 FLAGS+= -g
 else
 SUFFIX=
-FLAGS+= -O2 -DGCC
+FLAGS+= -Os -DGCC
 endif
 
 ifdef COV
@@ -84,7 +84,7 @@ tags:
 bin:    $(OBJ)
 	@echo
 	@echo 'creating binary "$(BIN)"'
-	@$(CC) $(compatibility) -o $(BIN) $(OBJ) $(LIBS)
+	@$(CC) $(compatibility) -o $(BIN) $(OBJ) $(LIBS) $(LDFLAGS)
 	@echo '... done'
 	@echo
 
